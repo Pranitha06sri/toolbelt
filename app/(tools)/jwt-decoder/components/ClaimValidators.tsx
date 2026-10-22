@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
 import type { DecodedJwt } from "@/lib/jwt-utils";
 import { cn } from "@/lib/cn";
@@ -17,6 +17,7 @@ interface Check {
 }
 
 export function ClaimValidators({ decoded }: Props) {
+  const leewayId = useId();
   const [iss, setIss] = useState("");
   const [aud, setAud] = useState("");
   const [leeway, setLeeway] = useState(30);
@@ -84,11 +85,12 @@ export function ClaimValidators({ decoded }: Props) {
           <InputRow label="Expected iss" value={iss} onChange={setIss} placeholder="https://auth.example.com" />
           <InputRow label="Expected aud" value={aud} onChange={setAud} placeholder="your-api" />
           <div>
-            <label className="block font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--fg-dim)] mb-1">
+            <label htmlFor={leewayId} className="block font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--fg-dim)] mb-1">
               Clock leeway
             </label>
             <div className="flex items-center gap-2">
               <input
+                id={leewayId}
                 type="number"
                 value={leeway}
                 onChange={(e) => setLeeway(Math.max(0, parseInt(e.target.value) || 0))}
@@ -145,12 +147,15 @@ function InputRow({
   onChange: (v: string) => void;
   placeholder: string;
 }) {
+  const id = useId();
+
   return (
     <div>
-      <label className="block font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--fg-dim)] mb-1">
+      <label htmlFor={id} className="block font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--fg-dim)] mb-1">
         {label}
       </label>
       <input
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}

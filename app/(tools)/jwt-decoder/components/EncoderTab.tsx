@@ -86,6 +86,7 @@ export function EncoderTab() {
           </div>
           <div className="p-4 space-y-3">
             <select
+              aria-label="Algorithm"
               value={alg}
               onChange={(e) => setAlg(e.target.value as SupportedAlg)}
               className="w-full px-3 py-2 rounded-md border border-[var(--hairline)] bg-[var(--bg-soft)] text-[var(--fg)] font-mono text-[13px]"
@@ -116,6 +117,7 @@ export function EncoderTab() {
             </span>
             <div className="flex items-center gap-2">
               <select
+                aria-label="Payload template"
                 onChange={(e) => {
                   if (e.target.value) loadTemplate(e.target.value);
                   e.currentTarget.selectedIndex = 0;
